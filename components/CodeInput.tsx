@@ -1,9 +1,13 @@
 import axios from "axios";
+
 import { useState } from "react";
+import { useSetRecoilState } from "recoil";
+
+import reviewState from "@/atoms/reviewAtom";
 
 const CodeInput = () => {
   const [code, setCode] = useState("");
-  const [review, setReview] = useState("");
+  const setReview = useSetRecoilState(reviewState);
   const onClickHandler = () => {
     axios
       .post("/api/review", { code })
@@ -16,11 +20,14 @@ const CodeInput = () => {
   };
 
   return (
-    <div>
-      <textarea value={code} onChange={(e) => setCode(e.target.value)} />
+    <div className="flex flex-col">
+      <textarea
+        value={code}
+        onChange={(e) => setCode(e.target.value)}
+        className="h-screen/2 w-auto resize-none rounded-lg border border-gray-300 p-2"
+        placeholder="코드를 입력하세요."
+      />
       <button onClick={onClickHandler}>Submit</button>
-      <div>{review}</div>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
     </div>
   );
 };
