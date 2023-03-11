@@ -19,7 +19,7 @@ const ResponseView = ({ isLoading }: ResponseViewProps) => {
       {isLoading && <Loader />}
       <CodeMirror
         value={review}
-        placeholder="코드리뷰가 보일 곳"
+        placeholder="로보-트가 리뷰를 완료하면 보일 공간입니다."
         theme={atomone}
         extensions={[loadLanguage(lang)!]}
         height="80vh"

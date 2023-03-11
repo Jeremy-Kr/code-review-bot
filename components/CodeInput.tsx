@@ -22,10 +22,13 @@ const CodeInput = () => {
     onSuccess: ({ data: { review } }) => {
       setReview(review);
     },
+    onError: (error) => {
+      alert(error);
+    },
   });
 
   const handleSubmit = (code: string) => {
-    if (!code) return alert("코드를 입력해주세요.");
+    if (!code) return alert("코오-드를 입력해주세요.");
     mutate(code);
   };
 
