@@ -24,6 +24,11 @@ const CodeInput = () => {
     },
   });
 
+  const handleSubmit = (code: string) => {
+    if (!code) return alert("코드를 입력해주세요.");
+    mutate(code);
+  };
+
   return (
     <div className="m-auto flex flex-col">
       <div>
@@ -57,8 +62,12 @@ const CodeInput = () => {
         <ResponseView isLoading={isLoading} />
       </div>
       <button
-        onClick={() => mutate(code)}
-        className={isLoading ? "bg-blue-100" : "bg-blue-300" + " h-12"}
+        onClick={() => handleSubmit(code)}
+        className={
+          (isLoading
+            ? "cursor-not-allowed bg-gray-400"
+            : "bg-blue-300 hover:bg-blue-200") + " h-12"
+        }
       >
         코드리뷰하기
       </button>
