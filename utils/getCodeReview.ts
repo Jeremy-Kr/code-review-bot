@@ -16,6 +16,7 @@ export async function getCodeReview(code: string) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`,
       },
+      timeout: 30000,
     }
   );
   const { choices } = response.data;
