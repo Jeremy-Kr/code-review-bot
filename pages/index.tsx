@@ -14,9 +14,8 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="flex h-screen flex-col">
+      <main className="flex h-screen gap-4 bg-slate-700">
         <CodeInput />
-        <ResponseView />
       </main>
     </>
   );
