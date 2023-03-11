@@ -19,6 +19,9 @@ const CodeInput = () => {
   const setReview = useSetRecoilState(reviewState);
 
   const { mutate, isLoading } = useMutation(postCode, {
+    onMutate: () => {
+      setReview("");
+    },
     onSuccess: ({ data: { review } }) => {
       setReview(review);
     },
