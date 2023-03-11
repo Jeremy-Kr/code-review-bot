@@ -1,40 +1,27 @@
-import axios from "axios";
-import CodeMirror from "@uiw/react-codemirror";
-
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { atomone } from "@uiw/codemirror-theme-atomone";
-import {
-  langNames,
-  langs,
-  LanguageName,
-  loadLanguage,
-} from "@uiw/codemirror-extensions-langs";
-import { orderBy } from "lodash";
 
-import reviewState from "@/atoms/reviewAtom";
-import langState from "@/atoms/langAtom";
+import { useMutation } from "@tanstack/react-query";
+
+import CodeMirror from "@uiw/react-codemirror";
+import { atomone } from "@uiw/codemirror-theme-atomone";
+import { LanguageName, loadLanguage } from "@uiw/codemirror-extensions-langs";
+
+import { langState, reviewState } from "@/atoms";
+import { LANG_ARRAY } from "@/utils/CONSTANT";
+import postCode from "@/utils/postCode";
 
 const CodeInput = () => {
   const [code, setCode] = useState("");
-  const [sortedLangNames, setSortedLangNames] = useState<typeof langNames>([]);
   const [lang, setLang] = useRecoilState(langState);
 
   const setReview = useSetRecoilState(reviewState);
-  const onClickHandler = () => {
-    axios
-      .post("/api/review", { code })
-      .then((res) => {
-        setReview(res.data.review);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
 
-  useEffect(() => {
-    setSortedLangNames(orderBy(langNames));
-  }, []);
+  const { mutate, isLoading } = useMutation(postCode, {
+    onSuccess: ({ data: { review } }) => {
+      setReview(review);
+    },
+  });
 
   return (
     <div className="flex flex-col">
@@ -43,7 +30,7 @@ const CodeInput = () => {
         onChange={(e) => setLang(e.target.value as LanguageName)}
         value={lang}
       >
-        {sortedLangNames.map((lang) => (
+        {LANG_ARRAY.map((lang) => (
           <option key={lang} value={lang}>
             {lang}
           </option>
@@ -57,7 +44,12 @@ const CodeInput = () => {
         extensions={[loadLanguage(lang)!]}
         height="40vh"
       />
-      <button onClick={onClickHandler}>Submit</button>
+      <button
+        onClick={() => mutate(code)}
+        className={isLoading ? "bg-blue-100" : "bg-blue-300"}
+      >
+        Submit
+      </button>
     </div>
   );
 };

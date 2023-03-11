@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tanstack/react-query": "^4.26.1",
     "@uiw/codemirror-extensions-langs": "^4.19.9",
     "@uiw/codemirror-theme-atomone": "^4.19.9",
     "@uiw/react-codemirror": "^4.19.9",
